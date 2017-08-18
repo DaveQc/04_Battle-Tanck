@@ -21,5 +21,12 @@ public:
 	ATank* GetControledTank() const;
 	
  	virtual void BeginPlay() override;
+
+	virtual void Tick(float) override;
+
+	void AimTownardsCrosshair();
+
+	//return en OUT peremeter
+	bool GetSightRayHitLocation(FVector& OUTHitLocation) const;
 	
 };
