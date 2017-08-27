@@ -31,7 +31,7 @@ void ATankPlayerControler::Tick(float DeltaTime)
 	Super::Tick(DeltaTime);
 	AimTownardsCrosshair();
 
-	UE_LOG(LogTemp, Warning, TEXT("Player Controler Ticking"));
+	//UE_LOG(LogTemp, Warning, TEXT("Player Controler Ticking"));
 }
 
 
@@ -59,10 +59,12 @@ void ATankPlayerControler::AimTownardsCrosshair() {
 
 }
 
+
+///get world location of linetrace trough crosshair, true if hits landscape
 bool ATankPlayerControler::GetSightRayHitLocation(FVector& OUTHitLocation) const {
 
-
-	return false;
+	OUTHitLocation = FVector(1.0);
+	return true;
 
 
 }
