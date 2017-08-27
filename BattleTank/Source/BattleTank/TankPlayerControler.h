@@ -28,5 +28,13 @@ public:
 
 	//return en OUT peremeter
 	bool GetSightRayHitLocation(FVector& OUTHitLocation) const;
+
+private:
+
+	UPROPERTY(EditAnywhere)
+		float CrosshairXLocation = 0.5;
+
+	UPROPERTY(EditAnywhere)
+		float CrosshairYLocation = 0.3333;
 	
 };
