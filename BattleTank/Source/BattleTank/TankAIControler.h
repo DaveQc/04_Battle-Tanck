@@ -26,5 +26,7 @@ public:
 
 
 	virtual void BeginPlay() override;
+
+	virtual void Tick(float) override;
 	
 };
