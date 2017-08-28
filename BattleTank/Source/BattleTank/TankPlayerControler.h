@@ -29,6 +29,8 @@ public:
 	//return en OUT peremeter
 	bool GetSightRayHitLocation(FVector& OUTHitLocation) const;
 
+	bool GetLookDirection(FVector2D ScreenLocation, FVector& LookDirection) const;
+
 private:
 
 	UPROPERTY(EditAnywhere)
