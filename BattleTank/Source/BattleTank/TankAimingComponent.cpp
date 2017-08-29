@@ -1,6 +1,7 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #include "TankAimingComponent.h"
+#include "TankTurret.h"
 #include "TankBarrel.h"
 
 
@@ -17,6 +18,12 @@ UTankAimingComponent::UTankAimingComponent()
 
 void UTankAimingComponent::SetBarrelReference(UTankBarrel* BarrelToSet) {
 	Barrel = BarrelToSet;
+
+
+}
+
+void UTankAimingComponent::SetTurretReference(UTankTurret* TurretToSet) {
+	Turret = TurretToSet;
 
 
 }
@@ -64,6 +71,14 @@ void UTankAimingComponent::AimAt(FVector OUTHitLocation, float LaunchSpeed) {
 	{
 		auto AimDirection = OUTLaunchVelocity.GetSafeNormal();
 		MoveBarrelTowards(AimDirection);
+
+		auto Time = GetWorld()->GetTimeSeconds();
+		UE_LOG(LogTemp, Warning, TEXT("%f: aim solution found"), Time);
+	}
+	else
+	{
+		auto Time = GetWorld()->GetTimeSeconds();
+		UE_LOG(LogTemp, Warning, TEXT("%f: no aim solve found"), Time);
 	}
 }
 
@@ -75,6 +90,6 @@ void UTankAimingComponent::MoveBarrelTowards(FVector AimDirection) {
 
 	
 
-	Barrel->Elevate(5);
+	Barrel->Elevate(DeltaRotation.Pitch);
 }
 
