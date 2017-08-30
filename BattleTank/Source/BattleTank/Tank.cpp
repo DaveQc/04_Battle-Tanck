@@ -61,14 +61,10 @@ void ATank::SetTurretReference(UTankTurret* TurretToSet) {
 
 void ATank::Fire() {
 
+	bool isReloeded = (FPlatformTime::Seconds() - LastFireTime) > RealoadTimeInSeconds;
 
-
-	if (!Barrel)
-	{
-		return;
-	}
-
-	// spawn a projectil at the socket location
+	if (Barrel && isReloeded)
+	{// spawn a projectil at the socket location
 
 	auto Projectile = GetWorld()->SpawnActor<AProjectile>(
 		ProjectileBluePrint,
@@ -77,7 +73,7 @@ void ATank::Fire() {
 		);
 
 	Projectile->LaunchProjectile(LaunchSpeed);
-
-
+	LastFireTime = FPlatformTime::Seconds();
+	}
 }
 

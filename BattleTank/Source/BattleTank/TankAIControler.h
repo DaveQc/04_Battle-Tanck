@@ -19,9 +19,9 @@ class BATTLETANK_API ATankAIControler : public AAIController
 
 private:
 	
-		ATank* GetControledTank() const;
 
-		ATank* GetPlayerTank() const;
+
+
 
 
 public:
