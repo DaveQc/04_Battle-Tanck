@@ -45,9 +45,10 @@ void UTankMovementComponent::RequestDirectMove(const FVector& MoveVelocity, bool
 	auto AIFowardIntention = MoveVelocity.GetSafeNormal();
 	auto FowardThrow = FVector::DotProduct(TankFoward, AIFowardIntention);
 
-	//IntendMoveFoward(FowardThrow);
+	IntendMoveFoward(FowardThrow);
 	
-	//auto RightThrow = FVector::CrossProduct(TankFoward, AIFowardIntention).Z;
+	auto RightThrow = FVector::CrossProduct(TankFoward, AIFowardIntention).Z;
+	IntendTurnRight(RightThrow);
 	
 	/*auto Time = GetWorld()->GetTimeSeconds();
 	UE_LOG(LogTemp, Warning, TEXT("time: %f :: %s vectoring"), Time, *TankName);*/
