@@ -37,6 +37,22 @@ void UTankMovementComponent::IntendTurnRight(float Throw) {
 	// TODO prevent double speed
 }
 
+void UTankMovementComponent::RequestDirectMove(const FVector& MoveVelocity, bool bForceMaxSpeed) {
+
+	//on need to call supper as we are replacing the functionality
+
+	auto TankFoward = GetOwner()->GetActorForwardVector().GetSafeNormal();
+	auto AIFowardIntention = MoveVelocity.GetSafeNormal();
+	auto FowardThrow = FVector::DotProduct(TankFoward, AIFowardIntention);
+
+	//IntendMoveFoward(FowardThrow);
+	
+	//auto RightThrow = FVector::CrossProduct(TankFoward, AIFowardIntention).Z;
+	
+	/*auto Time = GetWorld()->GetTimeSeconds();
+	UE_LOG(LogTemp, Warning, TEXT("time: %f :: %s vectoring"), Time, *TankName);*/
+
+}
 
 
 
