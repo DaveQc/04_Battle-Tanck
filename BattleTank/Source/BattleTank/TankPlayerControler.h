@@ -22,6 +22,9 @@ protected:
 	UFUNCTION(BlueprintCallable, Category = "Setup")
 		ATank* GetControledTank() const;
 
+	UFUNCTION(BlueprintImplementableEvent, Category = "Setup")
+		void FoundAimingComponent(UTankAimingComponent* AimCompRef);
+
 public:
 
 	
