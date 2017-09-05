@@ -45,7 +45,7 @@ protected:
 	virtual void BeginPlay() override;
 
 	UPROPERTY(BlueprintReadOnly, Category = "State")
-		EFiringState FiringState = EFiringState::Aiming;
+		EFiringState FiringState = EFiringState::Reloading;
 
 public:	
 	// Called every frame
@@ -59,6 +59,8 @@ public:
 private:
 
 	void MoveBarrelTowards(FVector AimDirection);
+
+	bool IsBarrelMoving();
 
 	UTankBarrel* Barrel = nullptr;
 	UTankTurret* Turret = nullptr;
@@ -75,6 +77,8 @@ private:
 	TSubclassOf<AProjectile> ProjectileBluePrint;
 
 
-double LastFireTime = 0;
+	double LastFireTime = 0;
+
+	FVector AimDirection;
 
 };

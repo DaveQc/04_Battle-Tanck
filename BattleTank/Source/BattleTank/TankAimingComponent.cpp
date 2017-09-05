@@ -48,9 +48,31 @@ void UTankAimingComponent::BeginPlay()
 	Super::BeginPlay();
 
 	// ...
+
+	
+	LastFireTime = FPlatformTime::Seconds();
+
 	
 }
 
+void UTankAimingComponent::Initialise(UTankBarrel* BarrelToSet, UTankTurret* TurretToSet) {
+	Barrel = BarrelToSet;
+	Turret = TurretToSet;
+}
+
+
+
+bool UTankAimingComponent::IsBarrelMoving() {
+	
+	if (!Barrel)
+	{
+		return false;
+	}
+
+	auto BarrelFoward = Barrel->GetForwardVector();
+	return !BarrelFoward.Equals(AimDirection, 0.01);
+
+}
 
 // Called every frame
 void UTankAimingComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)
@@ -58,6 +80,20 @@ void UTankAimingComponent::TickComponent(float DeltaTime, ELevelTick TickType, F
 	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
 
 	// ...
+
+	if ((FPlatformTime::Seconds() - LastFireTime) < RealoadTimeInSeconds)
+	{
+		FiringState = EFiringState::Reloading;
+	}
+	else if (IsBarrelMoving())
+	{
+		FiringState = EFiringState::Aiming;
+	}
+	else
+	{
+		FiringState = EFiringState::Locked;
+	}
+	
 
 	UE_LOG(LogTemp, Warning, TEXT("tank aiming component tick"));
 }
@@ -84,7 +120,7 @@ void UTankAimingComponent::AimAt(FVector OUTHitLocation) {
 
 	if (bHaveAimSolution)
 	{
-		auto AimDirection = OUTLaunchVelocity.GetSafeNormal();
+		AimDirection = OUTLaunchVelocity.GetSafeNormal();
 		MoveBarrelTowards(AimDirection);
 
 
@@ -110,24 +146,18 @@ void UTankAimingComponent::MoveBarrelTowards(FVector AimDirection) {
 	Turret->Rotate(DeltaRotation.Yaw);
 }
 
-void UTankAimingComponent::Initialise(UTankBarrel* BarrelToSet, UTankTurret* TurretToSet) {
 
-	Barrel = BarrelToSet;
-	Turret = TurretToSet;
-
-
-}
 
 void UTankAimingComponent::Fire() {
 
-	bool isReloeded = (FPlatformTime::Seconds() - LastFireTime) > RealoadTimeInSeconds;
+	
 
 	if (!Barrel && !ProjectileBluePrint)
 	{
 		return;
 	}
 	
-	if (Barrel && isReloeded)
+	if (FiringState != EFiringState::Reloading)
 	{// spawn a projectil at the socket location
 
 		auto Projectile = GetWorld()->SpawnActor<AProjectile>(
