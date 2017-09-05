@@ -7,10 +7,10 @@
 #include "GameFramework/Pawn.h"
 #include "Tank.generated.h"
 
-class UTankBarrel;
-//class UTankAimingComponent;
-//class UTankMovementComponent;
-class AProjectile;
+/*class UTankBarrel;
+class UTankAimingComponent;
+class UTankMovementComponent;
+class AProjectile;*/
 
 
 UCLASS()
@@ -49,27 +49,11 @@ public:
 	UFUNCTION(BlueprintCallable, Category = Setup)
 		void SetTurretReference(UTankTurret* TurretToSet);*/
 
-	UFUNCTION(BlueprintCallable)
-		void Fire();
+
 
 
 private:
 
-	UPROPERTY(EditAnywhere, Category = "Firing")
-		float LaunchSpeed = 8000.0f;
 
-	UPROPERTY(EditDefaultsOnly, Category = "Firing")
-		float RealoadTimeInSeconds = 0.3;
-
-	UPROPERTY(EditDefaultsOnly, Category = "Setup")
-		TSubclassOf<AProjectile> ProjectileBluePrint; 
-
-	UTankBarrel* Barrel = nullptr; //TODO Revome 
-
-	
-	
-	
-
-	double LastFireTime = 0;
 	
 };
