@@ -5,7 +5,7 @@
 #include "TankBarrel.h"
 #include "Projectile.h"
 //#include "TankMovementComponent.h"
-#include "TankAimingComponent.h"
+//#include "TankAimingComponent.h"
 
 // Sets default values
 ATank::ATank()
@@ -23,7 +23,7 @@ void ATank::BeginPlay()
 {
 	Super::BeginPlay();
 
-	TankAimingComponent = FindComponentByClass<UTankAimingComponent>();
+	//TankAimingComponent = FindComponentByClass<UTankAimingComponent>();
 }
 
 // Called every frame
@@ -40,7 +40,7 @@ void ATank::BeginPlay()
 
 }*/
 
-void ATank::AimAt(FVector OUTHitLocation) {
+/*void ATank::AimAt(FVector OUTHitLocation) {
 
 	if (!TankAimingComponent)
 	{
@@ -52,7 +52,7 @@ void ATank::AimAt(FVector OUTHitLocation) {
 	
 
 
-}
+}*/
 
 /*void ATank::SetBarrelReference(UTankBarrel* BarrelToSet) {
 	

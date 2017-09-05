@@ -2,7 +2,7 @@
 
 #include "TankPlayerControler.h"
 #include "TankAimingComponent.h"
-#include "Tank.h"
+//#include "Tank.h"
 
 
 
@@ -11,7 +11,7 @@ void ATankPlayerControler::BeginPlay()
 	Super::BeginPlay();
 
 	//...
-	auto AimingComponent = GetControledTank()->FindComponentByClass<UTankAimingComponent>();
+	auto AimingComponent = GetPawn()->FindComponentByClass<UTankAimingComponent>();
 
 	if (AimingComponent)
 	{
@@ -23,7 +23,7 @@ void ATankPlayerControler::BeginPlay()
 	}
 
 	UE_LOG(LogTemp, Warning, TEXT("Player Controler begin play"));
-	auto ControledTank = GetControledTank();
+	auto ControledTank = GetPawn();
 
 
 	if (!ControledTank)
@@ -32,7 +32,7 @@ void ATankPlayerControler::BeginPlay()
 	}
 	else
 	{
-		UE_LOG(LogTemp, Warning, TEXT("Player controler possesing %s"), *ControledTank->GetName());
+		UE_LOG(LogTemp, Warning, TEXT("Player controler possesing %s"),  GetPawn());
 	}
 
 }
@@ -51,21 +51,28 @@ void ATankPlayerControler::Tick(float DeltaTime)
 
 
 
-ATank* ATankPlayerControler::GetControledTank() const {
+/*ATank* ATankPlayerControler::GetPawn() const {
 
-	return Cast<ATank>(GetPawn());
+	return GetPawn();
 
 
-}
+}*/
 
 void ATankPlayerControler::AimTownardsCrosshair() {
 
-	if (!GetControledTank()){return;}
+	auto AimingComponent = GetPawn()->FindComponentByClass<UTankAimingComponent>();
+
+	if (AimingComponent)
+	{
+		FoundAimingComponent(AimingComponent);
+	}
+
+
 
 	FVector HitLocation;
 	if (GetSightRayHitLocation(HitLocation)) // has side effect , is going to line trace
 	{
-		GetControledTank()->AimAt(HitLocation);
+		AimingComponent->AimAt(HitLocation);
 
 	}
 
