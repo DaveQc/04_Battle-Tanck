@@ -4,6 +4,34 @@
 #include "Engine/World.h"
 
 
+
+UTankTrack::UTankTrack() {
+
+	PrimaryComponentTick.bCanEverTick = true;
+	
+}
+
+void UTankTrack::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) 
+{
+	
+	ReceiveTick(DeltaTime);
+	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
+
+	//...
+	
+	auto SlippageSpeed = FVector::DotProduct(GetRightVector(), GetComponentVelocity());
+
+	auto CorrectionAcceleration = -SlippageSpeed / DeltaTime * GetRightVector();
+
+	auto tankroot = Cast<UStaticMeshComponent>(GetOwner()->GetRootComponent());
+
+	auto CorrectionForce = (tankroot->GetMass() * CorrectionAcceleration) / 2; /*because there is 2 tracks*/
+
+	UE_LOG(LogTemp, Warning, TEXT("tank track tick"));
+
+}
+
+
 void UTankTrack::SetThrottle(float Throttle) {
 
 
