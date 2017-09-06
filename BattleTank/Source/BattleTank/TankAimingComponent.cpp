@@ -95,7 +95,7 @@ void UTankAimingComponent::TickComponent(float DeltaTime, ELevelTick TickType, F
 	}
 	
 
-	UE_LOG(LogTemp, Warning, TEXT("tank aiming component tick"));
+	//UE_LOG(LogTemp, Warning, TEXT("tank aiming component tick"));
 }
 
 void UTankAimingComponent::AimAt(FVector OUTHitLocation) {

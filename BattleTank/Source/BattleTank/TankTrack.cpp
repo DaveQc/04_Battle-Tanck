@@ -4,7 +4,6 @@
 #include "Engine/World.h"
 
 
-<<<<<<< HEAD
 
 UTankTrack::UTankTrack() {
 
@@ -35,8 +34,6 @@ void UTankTrack::TickComponent(float DeltaTime, ELevelTick TickType, FActorCompo
 }
 
 
-=======
->>>>>>> parent of 0791044... 0.0.42 [tick track not working]
 void UTankTrack::SetThrottle(float Throttle) {
 
 
