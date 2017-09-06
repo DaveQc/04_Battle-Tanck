@@ -14,7 +14,7 @@ UTankTrack::UTankTrack() {
 void UTankTrack::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) 
 {
 	
-	ReceiveTick(DeltaTime);
+	//ReceiveTick(DeltaTime);
 	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
 
 	//...
@@ -25,8 +25,10 @@ void UTankTrack::TickComponent(float DeltaTime, ELevelTick TickType, FActorCompo
 
 	auto tankroot = Cast<UStaticMeshComponent>(GetOwner()->GetRootComponent());
 
-	auto CorrectionForce = (tankroot->GetMass() * CorrectionAcceleration) / 2; /*because there is 2 tracks*/
+	auto CorrectionForce = (tankroot->GetMass() * CorrectionAcceleration) / 2; //because there is 2 tracks
 
+	tankroot->AddForce(CorrectionForce);
+	
 	UE_LOG(LogTemp, Warning, TEXT("tank track tick"));
 
 }
