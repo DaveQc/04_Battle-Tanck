@@ -77,7 +77,12 @@ void ATankPlayerControler::AimTownardsCrosshair() {
 
 
 	FVector HitLocation;
-	if (GetSightRayHitLocation(HitLocation)) // has side effect , is going to line trace
+	bool bGotHitLocation = GetSightRayHitLocation(HitLocation);
+
+	UE_LOG(LogTemp, Warning, TEXT("bGotHitLocation %i"), bGotHitLocation);
+
+
+	if (bGotHitLocation) // has side effect , is going to line trace
 	{
 		AimingComponent->AimAt(HitLocation);
 
@@ -100,10 +105,10 @@ bool ATankPlayerControler::GetSightRayHitLocation(FVector& OUTHitLocation) const
 	if (GetLookDirection(ScreenLocation, LookDirection))
 	{
 		//UE_LOG(LogTemp, Warning, TEXT("look direction: %s"), *LookDirection.ToString());
-		GetLookVectorHitLocation(LookDirection, OUTHitLocation);
+		return GetLookVectorHitLocation(LookDirection, OUTHitLocation);
 	}
 
-	return true;
+	return false;
 
 
 }
@@ -117,7 +122,7 @@ bool ATankPlayerControler::GetLookVectorHitLocation(FVector LookDirection, FVect
 	if (GetWorld()->LineTraceSingleByChannel(HitResult, StartLocation, EndLocation, ECollisionChannel::ECC_Visibility))
 	{
 		OUTHitLocation = HitResult.Location;
-		return true;
+		return true; 
 	}
 	return false;
 }

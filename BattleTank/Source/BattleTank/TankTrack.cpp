@@ -25,9 +25,13 @@ void UTankTrack::BeginPlay() {
 
 void UTankTrack::OnHit(UPrimitiveComponent* HitComponent, AActor* OtherActor, UPrimitiveComponent* OtherComponent, FVector NormalImpulse, const FHitResult& Hit) {
 
-	UE_LOG(LogTemp, Warning, TEXT("i'm hit i'm hit!"));
+	/*UE_LOG(LogTemp, Warning, TEXT("i'm hit i'm hit!"));*/
 
+	DriveTrack();
+	
 	ApplySidewaysForce();
+	
+	CurrentThrottle = 0;
 
 }
 
@@ -61,18 +65,25 @@ void UTankTrack::ApplySidewaysForce()
 }
 
 
-void UTankTrack::SetThrottle(float Throttle) {
+void UTankTrack::SetThrottle(float Throttle)
+{
+	CurrentThrottle = FMath::Clamp<float>(CurrentThrottle + Throttle, -1, 1);
+}
+
+void UTankTrack::DriveTrack() {
 
 
 
 
 	//clamp actual throttle value so player cant over drive
-	auto ForceApplied = GetForwardVector() * Throttle * TrackMaxDrivingForce;
+	auto ForceApplied = GetForwardVector() * CurrentThrottle * TrackMaxDrivingForce;
 	auto ForceLocation = GetComponentLocation();
 	auto TankRoot = Cast<UPrimitiveComponent>(GetOwner()->GetRootComponent());
 	TankRoot->AddForceAtLocation(ForceApplied, ForceLocation);
 
 }
+
+
 
 
 

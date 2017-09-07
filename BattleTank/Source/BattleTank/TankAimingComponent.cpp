@@ -128,6 +128,11 @@ void UTankAimingComponent::AimAt(FVector OUTHitLocation) {
 
 }
 
+EFiringState UTankAimingComponent::GetFiringState() const
+{
+	return FiringState;
+}
+
 void UTankAimingComponent::MoveBarrelTowards(FVector AimDirection) {
 
 	
@@ -143,7 +148,17 @@ void UTankAimingComponent::MoveBarrelTowards(FVector AimDirection) {
 	
 
 	Barrel->Elevate(DeltaRotation.Pitch);
-	Turret->Rotate(DeltaRotation.Yaw);
+
+	if (FMath::Abs(DeltaRotation.Yaw))
+	{
+		Turret->Rotate(DeltaRotation.Yaw);
+	}
+	else
+	{
+		Turret->Rotate(-DeltaRotation.Yaw);
+	}
+
+	
 }
 
 

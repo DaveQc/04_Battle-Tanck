@@ -28,13 +28,16 @@ void ATankAIControler::Tick(float DeltaTime)
 		//todo move towards the player
 
 		MoveToActor(PlayerTank, AcceptanceRadius);
-
-
-
 		//aim at the player
 		auto AimingComponent = ControlledTank->FindComponentByClass<UTankAimingComponent>();
 		AimingComponent->AimAt(PlayerTank->GetActorLocation());
-		AimingComponent->Fire(); //TODO dont fire every frame
+		
+		if (AimingComponent->GetFiringState() == EFiringState::Locked)
+		{
+			AimingComponent->Fire();
+		}
+
+		
 	}
 
 }

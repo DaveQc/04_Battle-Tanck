@@ -54,7 +54,7 @@ public:
 	
 	void AimAt(FVector OUTHitLocation);
 
-
+	EFiringState GetFiringState() const;
 	
 private:
 
