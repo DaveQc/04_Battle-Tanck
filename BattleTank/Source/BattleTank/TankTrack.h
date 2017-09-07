@@ -31,6 +31,8 @@ private:
 	
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
 
+	void ApplySidewaysForce();
+
 	
 
 	UFUNCTION()

@@ -7,7 +7,7 @@
 
 UTankTrack::UTankTrack() {
 
-	PrimaryComponentTick.bCanEverTick = true;
+	PrimaryComponentTick.bCanEverTick = false;
 	
 }
 
@@ -27,6 +27,7 @@ void UTankTrack::OnHit(UPrimitiveComponent* HitComponent, AActor* OtherActor, UP
 
 	UE_LOG(LogTemp, Warning, TEXT("i'm hit i'm hit!"));
 
+	ApplySidewaysForce();
 
 }
 
@@ -38,16 +39,25 @@ void UTankTrack::TickComponent(float DeltaTime, ELevelTick TickType, FActorCompo
 
 	//...
 	
+	
+
+	//UE_LOG(LogTemp, Warning, TEXT("tank track tick"));
+
+}
+
+void UTankTrack::ApplySidewaysForce()
+{
 	auto SlippageSpeed = FVector::DotProduct(GetRightVector(), GetComponentVelocity());
 
+	auto DeltaTime = GetWorld()->GetDeltaSeconds();
+	
 	auto CorrectionAcceleration = -SlippageSpeed / DeltaTime * GetRightVector();
 
 	auto tankroot = Cast<UStaticMeshComponent>(GetOwner()->GetRootComponent());
 
 	auto CorrectionForce = (tankroot->GetMass() * CorrectionAcceleration) / 2; /*because there is 2 tracks*/
 
-	//UE_LOG(LogTemp, Warning, TEXT("tank track tick"));
-
+	tankroot->AddForce(CorrectionForce);
 }
 
 
