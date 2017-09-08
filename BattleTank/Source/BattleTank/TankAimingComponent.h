@@ -84,6 +84,7 @@ private:
 
 	FVector AimDirection;
 
-	int RoundsLeft = 3;
+	UPROPERTY(EditDefaultsOnly, Category = "Firing")
+	int32 RoundsLeft = 3;
 
 };
